@@ -73,6 +73,14 @@ I analyzed 63,718 NYC listings across 5 boroughs to answer it.
 ## Limitations
 Snapshot data only · No booking/revenue data · 1–5 rating scale limits sensitivity · Findings are correlational, not causal · NYC-specific
 
+## SQL Analysis
+
+Queries written and tested in PostgreSQL 18. To run locally:
+- Install PostgreSQL
+- Create a database: `CREATE DATABASE airbnb_nyc;`
+- Run `sql/01_schema.sql` to create the table and load data
+- Run `sql/02_analysis.sql` to execute the analytical queries
+
 ---
 
 **Nhi Bui** - Villanova University  
