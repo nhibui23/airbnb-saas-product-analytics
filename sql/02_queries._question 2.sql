@@ -92,72 +92,16 @@ ORDER BY total_listings DESC;
 -- ============================================================
 -- KEY TAKEAWAY:
 
--- Monthly stays (8-30 nights) achieve the highest average rating (3.34) 
--- 1-night stays generate 2.5x more reviews (48 vs 19)with a slighly lower review rating (3.30)
--- This is the same tradeoff seen in availability as monthly stays achieves a better rating, but 1-night has a better number of reviews  
--- Worst-performing tier is 4-7 nights (weekly), as it's neither short enough for spontaneous bookings nor long enough for guests to feel invested.
+-- Similarly, across all 4 room types, Instant Book provides no meaningful drive. 
+
+-- Hotel rooms show the opposite pattern as  non-Instant Book hotel listings generate 36% more reviews (105.9 vs 77.9) AND higher ratings (3.58 vs 3.52), though the sample is tiny (91 listings)
+
+-- All in all, we can conclude that Instant Book does not show any specific effect on any of the room types, price listings or boroughs
+-- Sometimes, it shows contrasting patterns, as low-price listings and hotel rooms both perform worse with it.
 -- ============================================================
 -- RECOMMENDATION:
 
--- 1. Introduce a "Monthly Stay" tier as a premium product targeted promotion to business travelers and temporary relocating visitors who need temporary housing by months
--- 2. Reduce platform fees as an incentive
--- 3. Position 1-night stays as a separate "Spontaneous Travel" tier with suggested quick maintenance and amenities for hosts (auto check-in, pricing changes for last-minute booking)
--- ============================================================
+-- Instant Book is neither a growth lever nor a friction point worth product investment. 
 
--- FOLLOW UP 1D. Of all the possible combinations of price, availability, and minimum nights, which specific profile produces the best-rated listings?
-WITH listing_profiles AS (
-SELECT
-CASE
-WHEN price < 150  THEN 'Budget'
-WHEN price < 400  THEN 'Mid-range'
-ELSE 'Premium'
-END AS price_tier,
-
-CASE
-WHEN availability_365 <= 90  THEN 'Low availability'
-WHEN availability_365 <= 200 THEN 'Medium availability'
-ELSE 'High availability'
-END AS availability_level,
-
-CASE
-WHEN minimum_nights <= 2  THEN 'Short stay (1-2)'
-WHEN minimum_nights <= 7  THEN 'Week stay (3-7)'
-ELSE 'Long stay (8+)'
-END AS stay_type,
-review_rate_number,
-number_of_reviews
-FROM listings
-WHERE price > 0
-)
-SELECT price_tier, availability_level, stay_type,
-COUNT(*) AS listings,
-ROUND(AVG(review_rate_number), 2) AS avg_review_rate,
-ROUND(AVG(number_of_reviews), 2) AS avg_num_reviews
-FROM listing_profiles
-GROUP BY price_tier, availability_level, stay_type
-HAVING COUNT(*) >= 50
-ORDER BY avg_review_rate DESC
-LIMIT 10;
-
--- ============================================================
--- KEY TAKEAWAY:
-
--- 1. Of the top 10 highest-rated listing profiles, 6 require "Long stay (8+ nights)" even when combined with price and availability tiers. Stay length is the dominant factor.
-
--- 2. The best profile: Budget + High availability + Long stay (3.42 stars)
--- This suggests that guests booking month- long stays at lower price points have more realistic expectations and rate accordingly.
-
--- 3. The worst profile: Premium + Low availability + Short stay
--- This suggests the high price with low commitment to guests' expectations and investment, which lowers the review rating
-
--- 4. Meanwhile, the tradeoff between high review rate number and low number of reviews still exists even with the 3 combined drivers together
--- Hosts thereby should make decisions by their priority of values
----- ============================================================
--- RECOMMENDATION:
-
--- 1. Airbnb should promote a "Long-Stay Host" certification program. Hosts who commit to a minimum 8-night booking policy and maintain 90%+ availability would earn a badge and improved search ranking. 
--- This helps Airbnb target the highest-rated segment of the platform - remote workers and relocating professionals 
-
--- 2. Airbnb should move resources away from the Premium + Short-stay segment (lowest in the top 10 despite being the most common profile with 8,057 listings) 
--- This will set up for guest disappointment.
+-- Resources currently spent promoting it should redirect to availability tools, pricing guidance, and the monthly-stay product tier, which was also suggested earlier
 -- ============================================================
