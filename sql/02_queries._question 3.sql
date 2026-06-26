@@ -44,7 +44,27 @@ ORDER BY reviews_per_listing DESC;
 -- ============================================================
 
 
--- FOLLOW UP 3B. BRONX MARKET LANDSCAPE
+-- FOLLOW UP 3B. QUEENS MARKET LANDSCAPE
+-- What do current Bronx listings look like? 
+
+SELECT
+neighbourhood,
+COUNT(*) AS listings,
+ROUND(AVG(price), 2) AS avg_price,
+ROUND(MIN(price), 2) AS min_price,
+ROUND(MAX(price), 2) AS max_price,
+ROUND(AVG(review_rate_number), 2) AS avg_review_rate,
+ROUND(AVG(minimum_nights), 1) AS avg_min_nights,
+ROUND(AVG(availability_365), 0) AS avg_availability
+FROM listings
+WHERE neighbourhood_group = 'Queens'
+GROUP BY neighbourhood
+HAVING COUNT(*) >= 5
+ORDER BY listings DESC;
+
+-- ============================================================
+
+-- FOLLOW UP 3C. BRONX MARKET LANDSCAPE
 -- What do current Bronx listings look like? 
 
 SELECT
